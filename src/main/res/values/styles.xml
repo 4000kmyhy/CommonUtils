@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="dialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/anim_bottom_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_bottom_dialog_out</item>
+    </style>
+
+    <style name="Dialog.FullScreen.Theme" parent="Base.AlertDialog.AppCompat">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+</resources>
