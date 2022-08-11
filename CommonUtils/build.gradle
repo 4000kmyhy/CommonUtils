@@ -37,16 +37,16 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
 
-apply plugin: 'maven'
-
-uploadArchives {
-    repositories.mavenDeployer {
-        def mavenDirPath = file('F:\\ASProject\\xujj\\CommonUtils\\CommonUtils')
-        repository(url: "file://${mavenDirPath.absolutePath}")
-        pom.project {
-            groupId "com.github.xuyi"
-            artifactId "common-utils"
-            version android.defaultConfig.versionName
-        }
-    }
-}
+//apply plugin: 'maven'
+//
+//uploadArchives {
+//    repositories.mavenDeployer {
+//        def mavenDirPath = file('F:\\ASProject\\xujj\\CommonUtils\\CommonUtils')
+//        repository(url: "file://${mavenDirPath.absolutePath}")
+//        pom.project {
+//            groupId "com.github.xuyi"
+//            artifactId "common-utils"
+//            version android.defaultConfig.versionName
+//        }
+//    }
+//}
