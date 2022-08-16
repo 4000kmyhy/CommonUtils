@@ -12,10 +12,12 @@ object BasePreference {
 
     private const val SHARE_DEF_NAME = "CommonBase"
 
+    @JvmStatic
     operator fun get(context: Context, key: String?, defValue: Any?): Any? {
         return get(context, SHARE_DEF_NAME, key, defValue)
     }
 
+    @JvmStatic
     operator fun get(context: Context, name: String?, key: String?, defValue: Any?): Any? {
         val sp = context.getSharedPreferences(name, Context.MODE_PRIVATE)
         if (defValue is String) {
@@ -32,10 +34,12 @@ object BasePreference {
         return defValue
     }
 
+    @JvmStatic
     operator fun set(context: Context?, key: String?, value: Any?) {
         set(context, SHARE_DEF_NAME, key)
     }
 
+    @JvmStatic
     operator fun set(context: Context?, name: String?, key: String?, value: Any?) {
         if (context == null) return
         val sp = context.getSharedPreferences(name, Context.MODE_PRIVATE)
