@@ -20,6 +20,7 @@ object StatusBarUtils {
      * @param activity
      * @param isLight 状态栏和导航栏图标和文字是否浅色
      */
+    @JvmStatic
     fun init(activity: Activity, isLight: Boolean = true) {
         init(activity, isLight, isLight)
     }
@@ -29,6 +30,7 @@ object StatusBarUtils {
      * @param isLightStatusBar     状态栏图标和文字是否浅色
      * @param isLightNavigationBar 导航栏图标和文字是否浅色
      */
+    @JvmStatic
     fun init(activity: Activity, isLightStatusBar: Boolean, isLightNavigationBar: Boolean) {
         val window = activity.window
         var visibility =
@@ -54,6 +56,7 @@ object StatusBarUtils {
         }
     }
 
+    @JvmStatic
     fun getStatusBarHeight(context: Context): Int {
         var height = 0
         val resources = context.resources
@@ -64,6 +67,7 @@ object StatusBarUtils {
         return height
     }
 
+    @JvmStatic
     fun getNavigationBarHeight(context: Context): Int {
         var height = 0
         val resources = context.resources
@@ -74,6 +78,7 @@ object StatusBarUtils {
         return height
     }
 
+    @JvmStatic
     fun hasNavBar(context: Context): Boolean {
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val defaultDisplay = windowManager.defaultDisplay
@@ -95,6 +100,7 @@ object StatusBarUtils {
     /**
      * 沉浸式状态栏
      */
+    @JvmStatic
     fun immerseStatusBar(view: View?) {
         if (view == null || view.context == null) return
         view.setPadding(0, getStatusBarHeight(view.context), 0, 0)
@@ -103,6 +109,7 @@ object StatusBarUtils {
     /**
      * 沉浸式导航栏
      */
+    @JvmStatic
     fun immerseNavigationBar(view: View?) {
         if (view == null || view.context == null) return
         view.setPadding(0, 0, 0, getNavigationBarHeight(view.context))
@@ -111,6 +118,7 @@ object StatusBarUtils {
     /**
      * 沉浸式状态栏、导航栏
      */
+    @JvmStatic
     fun fitsSystemWindows(view: View?) {
         if (view == null || view.context == null) return
         view.setPadding(
