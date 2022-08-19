@@ -1,4 +1,4 @@
-package com.xu.commonutils;
+package com.xu.commonutilstest;
 
 import org.junit.Test;
 

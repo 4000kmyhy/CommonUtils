@@ -1,11 +1,9 @@
 package com.xu.commonutils.base
 
 import android.os.Bundle
-import android.os.Message
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import com.xu.commonutils.utils.BaseHandler
 import com.xu.commonutils.utils.StatusBarUtils
 
 /**
