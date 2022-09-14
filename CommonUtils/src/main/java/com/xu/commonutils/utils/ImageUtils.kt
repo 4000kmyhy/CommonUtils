@@ -128,6 +128,16 @@ object ImageUtils {
     }
 
     @JvmStatic
+    fun drawableToBitmap(drawable: Drawable?, width: Int, height: Int): Bitmap? {
+        if (drawable == null) return null
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, width, height)
+        drawable.draw(canvas)
+        return bitmap
+    }
+
+    @JvmStatic
     fun getBitmap(context: Context, @DrawableRes id: Int, @ColorInt color: Int): Bitmap? {
         return drawableToBitmap(getDrawable(context, id, color))
     }

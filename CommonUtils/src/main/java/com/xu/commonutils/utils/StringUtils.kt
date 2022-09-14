@@ -94,4 +94,19 @@ object StringUtils {
         }
         return builder
     }
+
+    /**
+     * 过滤特殊字符
+     */
+    @JvmStatic
+    fun patternStr(title: String): Boolean {
+        val length = title.length
+        for (i in 0 until length) {
+            val c = title[i]
+            if (c == '.' || c == ',' || c == '/' || c == '\\' || c == '@' || c == '#' || c == '*' || c == '&' || c.toInt() == 12290 || c == ':') {
+                return false
+            }
+        }
+        return true
+    }
 }

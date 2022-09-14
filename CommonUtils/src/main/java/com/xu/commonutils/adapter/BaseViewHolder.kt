@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
  * user: xujj
  * time: 2022/8/16 14:37
  **/
-class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+open class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun <T : View?> getView(@IdRes viewId: Int): T {
         val view = itemView.findViewById<View>(viewId)
         return view as T

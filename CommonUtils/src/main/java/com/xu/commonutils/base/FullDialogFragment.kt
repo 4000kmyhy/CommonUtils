@@ -61,9 +61,9 @@ abstract class FullDialogFragment : DialogFragment(), OnViewClickListener {
     }
 
     @LayoutRes
-    abstract fun getLayoutId(): Int
+    protected abstract fun getLayoutId(): Int
 
-    abstract fun init(view: View?)
+    protected abstract fun init(view: View)
 
     protected fun setOnViewClickListener(vararg views: View?) {
         for (view in views) {
@@ -71,5 +71,5 @@ abstract class FullDialogFragment : DialogFragment(), OnViewClickListener {
         }
     }
 
-    override fun onViewClick(view: View?, id: Int) {}
+    override fun onViewClick(view: View, id: Int) {}
 }

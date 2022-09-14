@@ -81,10 +81,25 @@ object BaseUtils {
      * 获取音频专辑图
      */
     @JvmStatic
-    fun getAlbumArtUri(albumId: Long): Uri? {
+    fun getAlbumArtUri(albumId: Long): Uri {
         return ContentUris.withAppendedId(
             Uri.parse("content://media/external/audio/albumart"),
             albumId
         )
+    }
+
+    @JvmStatic
+    fun checkNull(o: Any?): Boolean {
+        return o != null
+    }
+
+    @JvmStatic
+    fun checkNull(vararg objects: Any?): Boolean {
+        for (o in objects) {
+            if (o == null) {
+                return false
+            }
+        }
+        return true
     }
 }

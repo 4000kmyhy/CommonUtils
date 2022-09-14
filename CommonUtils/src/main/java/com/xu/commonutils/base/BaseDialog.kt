@@ -21,7 +21,7 @@ import com.xu.commonutils.utils.InputMethodUtils
 abstract class BaseDialog @JvmOverloads constructor(context: Context, themeResId: Int = 0) :
     Dialog(context, themeResId) {
 
-    protected var focusEditText: EditText? = null
+    private var focusEditText: EditText? = null
 
     override fun onStart() {
         super.onStart()
@@ -49,9 +49,8 @@ abstract class BaseDialog @JvmOverloads constructor(context: Context, themeResId
     @LayoutRes
     protected abstract fun getLayoutId(): Int
 
-    protected abstract fun init(view: View?)
+    protected abstract fun init(view: View)
 
-    @JvmName("setFocusEditText1")
     protected fun setFocusEditText(editText: EditText?) {
         focusEditText = editText
     }
@@ -66,7 +65,7 @@ abstract class BaseDialog @JvmOverloads constructor(context: Context, themeResId
         super.dismiss()
     }
 
-    protected fun isTransBg(): Boolean {
+    protected open fun isTransBg(): Boolean {
         return false
     }
 

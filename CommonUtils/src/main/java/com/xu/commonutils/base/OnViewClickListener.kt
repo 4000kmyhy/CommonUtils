@@ -9,5 +9,5 @@ import android.view.View
  * time: 2022/8/10 16:32
  **/
 interface OnViewClickListener {
-    fun onViewClick(view: View?, id: Int)
+    fun onViewClick(view: View, id: Int)
 }

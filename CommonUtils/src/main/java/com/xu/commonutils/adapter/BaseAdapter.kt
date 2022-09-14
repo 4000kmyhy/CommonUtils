@@ -115,9 +115,42 @@ abstract class BaseAdapter<T, K : BaseViewHolder?>(data: List<T>?) : RecyclerVie
         return null
     }
 
+    abstract class OnItemClickCallback {
+
+        open fun onItemClick(position: Int) {
+        }
+
+        open fun onItemLongClick(position: Int): Boolean {
+            return false
+        }
+
+        open fun onItemChildClick(position: Int, view: View) {
+        }
+    }
+
+    private var onItemClickCallback: OnItemClickCallback? = null
+
+    fun setOnItemClickCallback(callback: OnItemClickCallback) {
+        onItemClickCallback = callback
+    }
+
+    protected fun setOnViewClickListener(position: Int, vararg views: View?) {
+        for (view in views) {
+            view?.setOnClickListener { v -> onItemClickCallback?.onItemChildClick(position, v) }
+        }
+    }
+
     override fun onBindViewHolder(holder: K, position: Int) {
         val item = getItem(position)
         item?.let { onBindViewHolder(holder, position, it) }
+
+        holder?.itemView?.setOnClickListener {
+            onItemClickCallback?.onItemClick(position)
+        }
+
+        holder?.itemView?.setOnLongClickListener {
+            onItemClickCallback?.onItemLongClick(position) == true
+        }
     }
 
     abstract fun onBindViewHolder(holder: K, position: Int, item: T)
