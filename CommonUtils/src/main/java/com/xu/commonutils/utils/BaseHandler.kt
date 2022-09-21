@@ -43,4 +43,14 @@ abstract class BaseHandler<T>(parent: T) : Handler(Looper.getMainLooper()) {
     }
 
     protected abstract fun doHandler(parent: T?, msg: Message)
+
+    fun removeAndPost(runnable: Runnable) {
+        removeCallbacks(runnable)
+        post(runnable)
+    }
+
+    fun removeAndPostDelayed(runnable: Runnable, delayMillis: Long) {
+        removeCallbacks(runnable)
+        postDelayed(runnable, delayMillis)
+    }
 }
