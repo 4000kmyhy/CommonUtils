@@ -117,14 +117,14 @@ abstract class BaseAdapter<T, K : BaseViewHolder?>(data: List<T>?) : RecyclerVie
 
     abstract class OnItemClickCallback {
 
-        open fun onItemClick(position: Int) {
+        open fun onItemClick(view: View, position: Int) {
         }
 
-        open fun onItemLongClick(position: Int): Boolean {
+        open fun onItemLongClick(view: View, position: Int): Boolean {
             return false
         }
 
-        open fun onItemChildClick(position: Int, view: View) {
+        open fun onItemChildClick(view: View, position: Int) {
         }
     }
 
@@ -135,8 +135,10 @@ abstract class BaseAdapter<T, K : BaseViewHolder?>(data: List<T>?) : RecyclerVie
     }
 
     protected fun setOnViewClickListener(position: Int, vararg views: View?) {
-        for (view in views) {
-            view?.setOnClickListener { v -> onItemClickCallback?.onItemChildClick(position, v) }
+        if (onItemClickCallback != null) {
+            for (view in views) {
+                view?.setOnClickListener { v -> onItemClickCallback?.onItemChildClick(v, position) }
+            }
         }
     }
 
@@ -144,12 +146,14 @@ abstract class BaseAdapter<T, K : BaseViewHolder?>(data: List<T>?) : RecyclerVie
         val item = getItem(position)
         item?.let { onBindViewHolder(holder, position, it) }
 
-        holder?.itemView?.setOnClickListener {
-            onItemClickCallback?.onItemClick(position)
-        }
+        if (onItemClickCallback != null) {
+            holder?.itemView?.setOnClickListener {
+                onItemClickCallback?.onItemClick(it, position)
+            }
 
-        holder?.itemView?.setOnLongClickListener {
-            onItemClickCallback?.onItemLongClick(position) == true
+            holder?.itemView?.setOnLongClickListener {
+                onItemClickCallback?.onItemLongClick(it, position) == true
+            }
         }
     }
 
