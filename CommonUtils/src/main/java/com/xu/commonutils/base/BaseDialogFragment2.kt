@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.DialogFragment
+import androidx.viewbinding.ViewBinding
 import com.xu.commonutils.R
 
 /**
@@ -15,7 +16,9 @@ import com.xu.commonutils.R
  * user: xujj
  * time: 2022/8/11 10:26
  **/
-abstract class BaseDialogFragment : DialogFragment(), OnViewClickListener {
+abstract class BaseDialogFragment2<T : ViewBinding> : DialogFragment(), OnViewClickListener {
+
+    protected lateinit var binding: T
 
     override fun onStart() {
         super.onStart()
@@ -65,7 +68,8 @@ abstract class BaseDialogFragment : DialogFragment(), OnViewClickListener {
         savedInstanceState: Bundle?
     ): View? {
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        return inflater.inflate(getLayoutId(), container, false)
+        binding = getViewBinding(inflater, container)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,8 +77,7 @@ abstract class BaseDialogFragment : DialogFragment(), OnViewClickListener {
         init(view)
     }
 
-    @LayoutRes
-    protected abstract fun getLayoutId(): Int
+    abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): T
 
     protected abstract fun init(view: View)
 

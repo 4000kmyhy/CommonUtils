@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
-import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import com.xu.commonutils.utils.FragmentUtils
 
 /**
@@ -15,14 +15,17 @@ import com.xu.commonutils.utils.FragmentUtils
  * user: xujj
  * time: 2022/8/10 17:34
  **/
-abstract class BaseFragment : Fragment(), OnViewClickListener {
+abstract class BaseFragment2<T : ViewBinding> : Fragment(), OnViewClickListener {
+
+    protected lateinit var binding: T
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(getLayoutId(), container, false)
+        binding = getViewBinding(inflater, container)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,8 +33,7 @@ abstract class BaseFragment : Fragment(), OnViewClickListener {
         init(view)
     }
 
-    @LayoutRes
-    protected abstract fun getLayoutId(): Int
+    abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): T
 
     protected abstract fun init(view: View)
 

@@ -14,6 +14,7 @@ import com.xu.commonutils.R
  * user: xujj
  * time: 2022/8/11 10:31
  **/
+@Deprecated("use BaseDialogFragment")
 abstract class FullDialogFragment : DialogFragment(), OnViewClickListener {
 
     override fun onStart() {
