@@ -21,7 +21,7 @@
 #-renamesourcefileattribute SourceFile
 
 #BaseAdapter
--keep public class * extends com.coocent.musicbase.adapter.BaseViewHolder
--keepclassmembers  class **$** extends com.coocent.musicbase.adapter.BaseViewHolder {
+-keep public class * extends com.xu.commonutils.adapter.BaseViewHolder
+-keepclassmembers  class **$** extends com.xu.commonutils.adapter.BaseViewHolder {
      <init>(...);
 }
