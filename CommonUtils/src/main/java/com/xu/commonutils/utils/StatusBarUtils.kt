@@ -22,7 +22,8 @@ object StatusBarUtils {
      */
     @JvmStatic
     fun init(activity: Activity, isLight: Boolean = true) {
-        init(activity, isLight, isLight)
+        setLight(activity, isLight)
+        translucent(activity)
     }
 
     /**
@@ -32,6 +33,17 @@ object StatusBarUtils {
      */
     @JvmStatic
     fun init(activity: Activity, isLightStatusBar: Boolean, isLightNavigationBar: Boolean) {
+        setLight(activity, isLightStatusBar, isLightNavigationBar)
+        translucent(activity)
+    }
+
+    @JvmStatic
+    fun setLight(activity: Activity, isLight: Boolean) {
+        setLight(activity, isLight, isLight)
+    }
+
+    @JvmStatic
+    fun setLight(activity: Activity, isLightStatusBar: Boolean, isLightNavigationBar: Boolean) {
         val window = activity.window
         var visibility =
             View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -42,6 +54,10 @@ object StatusBarUtils {
             visibility = visibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
         window.decorView.systemUiVisibility = visibility
+    }
+
+    private fun translucent(activity: Activity) {
+        val window = activity.window
         //透明状态栏-导航栏FLAG_TRANSLUCENT_NAVIGATION
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = Color.TRANSPARENT

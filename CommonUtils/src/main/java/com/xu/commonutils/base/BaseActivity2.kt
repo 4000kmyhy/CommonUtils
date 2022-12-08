@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
 import com.xu.commonutils.utils.StatusBarUtils
 
@@ -55,5 +57,7 @@ abstract class BaseActivity2<T : ViewBinding> : AppCompatActivity(), OnViewClick
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+        ViewCompat.getWindowInsetsController(window.decorView)
+            ?.hide(WindowInsetsCompat.Type.navigationBars())
     }
 }

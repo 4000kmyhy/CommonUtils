@@ -39,10 +39,12 @@ abstract class BaseHandler<T>(parent: T) : Handler(Looper.getMainLooper()) {
     override fun handleMessage(msg: Message) {
         super.handleMessage(msg)
         val parent = weakReference.get() as T?
-        doHandler(parent, msg)
+        if (parent != null) {
+            doHandler(parent, msg)
+        }
     }
 
-    protected abstract fun doHandler(parent: T?, msg: Message)
+    protected abstract fun doHandler(parent: T, msg: Message)
 
     fun removeAndPost(runnable: Runnable) {
         removeCallbacks(runnable)
