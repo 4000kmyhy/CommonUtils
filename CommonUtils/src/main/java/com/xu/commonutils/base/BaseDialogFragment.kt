@@ -24,21 +24,41 @@ abstract class BaseDialogFragment : DialogFragment(), OnViewClickListener {
             val window = dialog.window
             if (window != null) {
                 if (isFullScreen()) {
-                    //状态栏
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                    }
-                    //导航栏
+//                    //状态栏
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//                        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+//                    }
+//                    //导航栏
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+//                        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+//                        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+//                        window.navigationBarColor = Color.parseColor("#00000000")
+//                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//                        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+//                    }
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
                         window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                                 or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                                 or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
                         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                        window.statusBarColor = Color.parseColor("#00000000")
                         window.navigationBarColor = Color.parseColor("#00000000")
                     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
                     }
+                    var visibility =
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    if (!isLight()) {
+                        //状态栏图标和文字颜色为暗色
+                        visibility = visibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                        //导航栏图标和文字颜色为暗色
+                        visibility = visibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                    }
+                    window.decorView.systemUiVisibility = visibility
                 } else {
                     window.setWindowAnimations(R.style.dialogAnimation)
                     window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -88,5 +108,9 @@ abstract class BaseDialogFragment : DialogFragment(), OnViewClickListener {
 
     protected open fun isFullScreen(): Boolean {
         return false
+    }
+
+    protected open fun isLight(): Boolean {
+        return true
     }
 }
