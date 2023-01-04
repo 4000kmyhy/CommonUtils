@@ -21,13 +21,30 @@ object StringUtils {
         val hh = second / 3600
         val mm = second % 3600 / 60
         val ss = second % 60
-        var str = "00:00"
-        str = if (hh != 0L) {
+        return if (hh != 0L) {
             String.format("%02d:%02d:%02d", hh, mm, ss)
         } else {
             String.format("%02d:%02d", mm, ss)
         }
-        return str
+    }
+
+    //String.format频繁调用会oom
+    @JvmStatic
+    fun stringForTime2(millisecond: Long): String {
+        val second = millisecond / 1000
+        val hh = second / 3600
+        val mm = second % 3600 / 60
+        val ss = second % 60
+        return if (hh != 0L) {
+            val hour = if (hh < 10) "0$hh" else "" + hh
+            val min = if (mm < 10) "0$mm" else "" + mm
+            val sec = if (ss < 10) "0$ss" else "" + ss
+            "$hour:$min:$sec"
+        } else {
+            val min = if (mm < 10) "0$mm" else "" + mm
+            val sec = if (ss < 10) "0$ss" else "" + ss
+            "$min:$sec"
+        }
     }
 
     @JvmStatic
