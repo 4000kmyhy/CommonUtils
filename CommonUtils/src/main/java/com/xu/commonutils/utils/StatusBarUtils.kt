@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Build
 import android.util.DisplayMetrics
 import android.view.View
+import android.view.Window
 import android.view.WindowManager
 
 /**
@@ -22,8 +23,7 @@ object StatusBarUtils {
      */
     @JvmStatic
     fun init(activity: Activity, isLight: Boolean = true) {
-        setLight(activity, isLight)
-        translucent(activity)
+        init(activity.window, isLight)
     }
 
     /**
@@ -33,18 +33,17 @@ object StatusBarUtils {
      */
     @JvmStatic
     fun init(activity: Activity, isLightStatusBar: Boolean, isLightNavigationBar: Boolean) {
-        setLight(activity, isLightStatusBar, isLightNavigationBar)
-        translucent(activity)
+        init(activity.window, isLightStatusBar, isLightNavigationBar)
     }
 
     @JvmStatic
-    fun setLight(activity: Activity, isLight: Boolean) {
-        setLight(activity, isLight, isLight)
+    fun init(window: Window, isLight: Boolean = true) {
+        init(window, isLight, isLight)
     }
 
     @JvmStatic
-    fun setLight(activity: Activity, isLightStatusBar: Boolean, isLightNavigationBar: Boolean) {
-        val window = activity.window
+    fun init(window: Window, isLightStatusBar: Boolean, isLightNavigationBar: Boolean) {
+        //状态栏、导航栏字体、图标颜色
         var visibility =
             View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         if (!isLightStatusBar) { //状态栏图标和文字颜色为暗色
@@ -54,21 +53,19 @@ object StatusBarUtils {
             visibility = visibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
         window.decorView.systemUiVisibility = visibility
-    }
 
-    private fun translucent(activity: Activity) {
-        val window = activity.window
-        //透明状态栏-导航栏FLAG_TRANSLUCENT_NAVIGATION
+        //状态栏、导航栏背景透明
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) //设置透明状态栏
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION) //设置透明导航栏
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = Color.TRANSPARENT
             window.navigationBarColor = Color.TRANSPARENT
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { //系统栏设置不强调，否则不会完全透明
-                window.isNavigationBarContrastEnforced = false
-                window.isStatusBarContrastEnforced = false
-            }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) //设置透明状态栏
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION) //设置透明导航栏
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { //系统栏设置不强调，否则不会完全透明
+            window.isNavigationBarContrastEnforced = false
+            window.isStatusBarContrastEnforced = false
         }
     }
 
