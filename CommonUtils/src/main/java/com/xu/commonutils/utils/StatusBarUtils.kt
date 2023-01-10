@@ -55,17 +55,16 @@ object StatusBarUtils {
         window.decorView.systemUiVisibility = visibility
 
         //状态栏、导航栏背景透明
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) //设置透明状态栏
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION) //设置透明导航栏
-        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = Color.TRANSPARENT
             window.navigationBarColor = Color.TRANSPARENT
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { //系统栏设置不强调，否则不会完全透明
-            window.isNavigationBarContrastEnforced = false
-            window.isStatusBarContrastEnforced = false
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { //系统栏设置不强调，否则不会完全透明
+                window.isNavigationBarContrastEnforced = false
+                window.isStatusBarContrastEnforced = false
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) //设置透明状态栏
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION) //设置透明导航栏
         }
     }
 
