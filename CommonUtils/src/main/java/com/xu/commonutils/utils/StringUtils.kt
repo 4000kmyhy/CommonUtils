@@ -22,9 +22,17 @@ object StringUtils {
         val mm = second % 3600 / 60
         val ss = second % 60
         return if (hh != 0L) {
-            String.format("%02d:%02d:%02d", hh, mm, ss)
+            try {
+                String.format("%02d:%02d:%02d", hh, mm, ss)
+            } catch (e: OutOfMemoryError) {
+                "00:00:00"
+            }
         } else {
-            String.format("%02d:%02d", mm, ss)
+            try {
+                String.format("%02d:%02d", mm, ss)
+            } catch (e: OutOfMemoryError) {
+                "00:00"
+            }
         }
     }
 
@@ -39,11 +47,19 @@ object StringUtils {
             val hour = if (hh < 10) "0$hh" else "" + hh
             val min = if (mm < 10) "0$mm" else "" + mm
             val sec = if (ss < 10) "0$ss" else "" + ss
-            "$hour:$min:$sec"
+            try {
+                "$hour:$min:$sec"
+            } catch (e: OutOfMemoryError) {
+                "00:00:00"
+            }
         } else {
             val min = if (mm < 10) "0$mm" else "" + mm
             val sec = if (ss < 10) "0$ss" else "" + ss
-            "$min:$sec"
+            try {
+                "$min:$sec"
+            } catch (e: OutOfMemoryError) {
+                "00:00"
+            }
         }
     }
 

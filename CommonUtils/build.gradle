@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 18
         targetSdkVersion 31
-        versionCode 23
-        versionName "1.2.3"
+        versionCode 24
+        versionName "1.2.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'proguard-rules.pro'
@@ -51,14 +51,14 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
 
-                groupId = 'com.github.xuyi'
+                groupId = 'com.xxx.commonutils'
                 artifactId = 'common-utils'
                 version = android.defaultConfig.versionName
             }
             debug(MavenPublication) {
                 from components.debug
 
-                groupId = 'com.github.xuyi'
+                groupId = 'com.xxx.commonutils'
                 artifactId = 'common-utils'
                 version = android.defaultConfig.versionName
             }
@@ -73,7 +73,7 @@ afterEvaluate {
 //        def mavenDirPath = file('F:\\ASProject\\xujj\\CommonUtils\\CommonUtils')
 //        repository(url: "file://${mavenDirPath.absolutePath}")
 //        pom.project {
-//            groupId "com.github.xuyi"
+//            groupId = 'com.xxx.commonutils'
 //            artifactId "common-utils"
 //            version android.defaultConfig.versionName
 //        }
