@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.content.res.Resources.NotFoundException
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
@@ -72,15 +73,15 @@ object ImageUtils {
 
     @JvmStatic
     fun getVectorDrawable(context: Context, @DrawableRes id: Int, @ColorInt color: Int): Drawable? {
-        try {
+        return try {
             val vectorDrawableCompat = VectorDrawableCompat.create(context.resources, id, null)
             val drawable = vectorDrawableCompat!!.mutate()
             drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-            return tintDrawable(drawable, color)
+            tintDrawable(drawable, color)
         } catch (e: Exception) {
             e.printStackTrace()
+            null
         }
-        return null
     }
 
     @JvmStatic
@@ -91,15 +92,15 @@ object ImageUtils {
         height: Int,
         @ColorInt color: Int
     ): Drawable? {
-        try {
+        return try {
             val vectorDrawableCompat = VectorDrawableCompat.create(context.resources, id, null)
             val drawable = vectorDrawableCompat!!.mutate()
             drawable.setBounds(0, 0, width, height)
-            return tintDrawable(drawable, color)
+            tintDrawable(drawable, color)
         } catch (e: Exception) {
             e.printStackTrace()
+            null
         }
-        return null
     }
 
     @JvmStatic
@@ -122,7 +123,9 @@ object ImageUtils {
         val height = drawable.intrinsicHeight
         if (width <= 0 || height <= 0) return null
         return try {
-            val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            val config =
+                if (drawable.opacity != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
+            val bitmap = Bitmap.createBitmap(width, height, config)
             val canvas = Canvas(bitmap)
             drawable.setBounds(0, 0, width, height)
             drawable.draw(canvas)
@@ -138,7 +141,9 @@ object ImageUtils {
         if (drawable == null) return null
         if (width <= 0 || height <= 0) return null
         return try {
-            val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            val config =
+                if (drawable.opacity != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
+            val bitmap = Bitmap.createBitmap(width, height, config)
             val canvas = Canvas(bitmap)
             drawable.setBounds(0, 0, width, height)
             drawable.draw(canvas)
