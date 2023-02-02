@@ -28,7 +28,7 @@ import java.lang.ref.WeakReference
 //    protected abstract fun doHandler(parent: Any?, msg: Message)
 //}
 
-abstract class BaseHandler<T>(parent: T) : Handler(Looper.getMainLooper()) {
+open class BaseHandler<T>(parent: T) : Handler(Looper.getMainLooper()) {
 
     private val weakReference: WeakReference<*>
 
@@ -44,8 +44,11 @@ abstract class BaseHandler<T>(parent: T) : Handler(Looper.getMainLooper()) {
         }
     }
 
-    protected abstract fun doHandler(parent: T, msg: Message)
+    protected open fun doHandler(parent: T, msg: Message) {
 
+    }
+
+    @Deprecated("post")
     fun removeAndPost(runnable: Runnable) {
         removeCallbacks(runnable)
         post(runnable)
