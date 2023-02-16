@@ -24,8 +24,9 @@ abstract class BaseFragment2<T : ViewBinding> : Fragment(), OnViewClickListener 
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = getViewBinding(inflater, container)
-        return binding.root
+        return getViewBinding(inflater, container).also {
+            binding = it
+        }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

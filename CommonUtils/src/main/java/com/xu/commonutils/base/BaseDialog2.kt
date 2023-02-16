@@ -21,8 +21,7 @@ import com.xu.commonutils.utils.InputMethodUtils
 abstract class BaseDialog2<T : ViewBinding> @JvmOverloads constructor(
     context: Context,
     themeResId: Int = 0
-) :
-    Dialog(context, themeResId) {
+) : Dialog(context, themeResId) {
 
     protected lateinit var binding: T
 

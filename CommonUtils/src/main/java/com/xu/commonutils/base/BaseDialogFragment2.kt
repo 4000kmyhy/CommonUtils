@@ -2,7 +2,6 @@ package com.xu.commonutils.base
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.DialogFragment
@@ -78,8 +77,9 @@ abstract class BaseDialogFragment2<T : ViewBinding> : DialogFragment(), OnViewCl
         savedInstanceState: Bundle?
     ): View? {
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        binding = getViewBinding(inflater, container)
-        return binding.root
+        return getViewBinding(inflater, container).also {
+            binding = it
+        }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
