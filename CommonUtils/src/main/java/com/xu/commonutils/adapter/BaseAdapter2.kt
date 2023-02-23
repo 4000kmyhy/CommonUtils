@@ -1,8 +1,10 @@
 package com.xu.commonutils.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
@@ -12,7 +14,7 @@ import androidx.viewbinding.ViewBinding
  * user: xujj
  * time: 2023/2/2 18:03
  **/
-abstract class BaseAdapter2<T, K : BaseViewHolder>(data: List<T>?) : RecyclerView.Adapter<K>() {
+abstract class BaseAdapter2<T>(data: List<T>?) : RecyclerView.Adapter<BaseViewHolder2>() {
 
     protected var mData: List<T>?
 
@@ -41,11 +43,9 @@ abstract class BaseAdapter2<T, K : BaseViewHolder>(data: List<T>?) : RecyclerVie
         return if (mData != null) mData!!.size else 0
     }
 
-    protected lateinit var binding: ViewBinding
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): K {
-        binding = getViewBinding(LayoutInflater.from(parent.context), parent, viewType)
-        return BaseViewHolder(binding.root) as K
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder2 {
+        val binding = getViewBinding(LayoutInflater.from(parent.context), parent, viewType)
+        return BaseViewHolder2(binding)
     }
 
     abstract fun getViewBinding(
@@ -54,9 +54,22 @@ abstract class BaseAdapter2<T, K : BaseViewHolder>(data: List<T>?) : RecyclerVie
         viewType: Int
     ): ViewBinding
 
-    private var onItemClickCallback: BaseAdapter.OnItemClickCallback? = null
+    abstract class OnItemClickCallback {
 
-    fun setOnItemClickCallback(callback: BaseAdapter.OnItemClickCallback) {
+        open fun onItemClick(view: View, position: Int) {
+        }
+
+        open fun onItemLongClick(view: View, position: Int): Boolean {
+            return false
+        }
+
+        open fun onItemChildClick(view: View, position: Int) {
+        }
+    }
+
+    private var onItemClickCallback: OnItemClickCallback? = null
+
+    fun setOnItemClickCallback(callback: OnItemClickCallback) {
         onItemClickCallback = callback
     }
 
@@ -68,10 +81,10 @@ abstract class BaseAdapter2<T, K : BaseViewHolder>(data: List<T>?) : RecyclerVie
         }
     }
 
-    override fun onBindViewHolder(holder: K, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder2, position: Int) {
         val item = getItem(position)
         item?.let {
-            onBindViewHolder(holder, position, it)
+            onBindView(holder.binding, position, it)
         }
 
         if (onItemClickCallback != null) {
@@ -85,9 +98,18 @@ abstract class BaseAdapter2<T, K : BaseViewHolder>(data: List<T>?) : RecyclerVie
         }
     }
 
-    abstract fun onBindViewHolder(holder: K, position: Int, item: T)
+    abstract fun onBindView(binding: ViewBinding, position: Int, item: T)
 
     override fun getItemCount(): Int {
         return getSize()
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        recyclerView.layoutManager = getLayoutManager(recyclerView.context)
+    }
+
+    open fun getLayoutManager(context: Context): RecyclerView.LayoutManager {
+        return LinearLayoutManager(context)
     }
 }

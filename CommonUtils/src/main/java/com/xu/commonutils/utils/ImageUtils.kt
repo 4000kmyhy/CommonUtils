@@ -22,6 +22,28 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 object ImageUtils {
 
     @JvmStatic
+    fun getDrawable(context: Context, @DrawableRes id: Int): Drawable? {
+        try {
+            var drawable: Drawable? = null
+            try {
+                drawable = ContextCompat.getDrawable(context, id)
+            } catch (e: NotFoundException) {
+                val vectorDrawableCompat = VectorDrawableCompat.create(context.resources, id, null)
+                if (vectorDrawableCompat != null) {
+                    drawable = vectorDrawableCompat.mutate()
+                }
+            }
+            if (drawable != null) {
+                drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+                return drawable
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    @JvmStatic
     fun getDrawable(context: Context, @DrawableRes id: Int, @ColorInt color: Int): Drawable? {
         try {
             var drawable: Drawable? = null
