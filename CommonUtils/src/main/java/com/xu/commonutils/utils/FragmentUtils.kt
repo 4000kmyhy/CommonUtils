@@ -24,7 +24,7 @@ object FragmentUtils {
         fragment: Fragment?,
         any: Any?,
         @IdRes containerViewId: Int,
-        tag: String? = javaClass.simpleName,
+        tag: String? = fragment?.javaClass?.simpleName,
         animationType: Int = ANIM_TYPE_NONE
     ) {
         var enter = 0
@@ -53,7 +53,7 @@ object FragmentUtils {
         fragment: Fragment?,
         any: Any?,
         @IdRes containerViewId: Int,
-        tag: String? = javaClass.simpleName,
+        tag: String? = fragment?.javaClass?.simpleName,
         @AnimatorRes @AnimRes enter: Int = 0,
         @AnimatorRes @AnimRes exit: Int = 0,
         @AnimatorRes @AnimRes popEnter: Int = 0,
@@ -80,7 +80,7 @@ object FragmentUtils {
         fragment: Fragment?,
         any: Any?,
         @IdRes containerViewId: Int,
-        tag: String? = javaClass.simpleName
+        tag: String? = fragment?.javaClass?.simpleName,
     ) {
         if (fragment == null) return
         if (any is AppCompatActivity) {

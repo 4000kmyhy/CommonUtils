@@ -32,9 +32,10 @@ class BaseBroadcastReceiver(context: Context?) : BroadcastReceiver() {
         return this
     }
 
-    fun register(callback: OnReceiveCallback?) {
+    fun register(callback: OnReceiveCallback?): BaseBroadcastReceiver {
         onReceiveCallback = callback
         mContext?.registerReceiver(this, intentFilter)
+        return this
     }
 
 //    fun register(vararg actions: String?) {
