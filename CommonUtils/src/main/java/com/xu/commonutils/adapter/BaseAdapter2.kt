@@ -14,20 +14,20 @@ import androidx.viewbinding.ViewBinding
  * user: xujj
  * time: 2023/2/2 18:03
  **/
-abstract class BaseAdapter2<T>(data: List<T>?) : RecyclerView.Adapter<BaseViewHolder2>() {
+abstract class BaseAdapter2<T>(data: MutableList<T>?) : RecyclerView.Adapter<BaseViewHolder2>() {
 
-    protected var mData: List<T>?
+    protected var mData: MutableList<T>?
 
     init {
         mData = data
     }
 
-    fun setData(data: List<T>?) {
+    open fun setData(data: MutableList<T>?) {
         mData = data
         notifyDataSetChanged()
     }
 
-    fun getData(): List<T>? {
+    fun getData(): MutableList<T>? {
         return mData
     }
 
@@ -41,6 +41,29 @@ abstract class BaseAdapter2<T>(data: List<T>?) : RecyclerView.Adapter<BaseViewHo
 
     fun getSize(): Int {
         return if (mData != null) mData!!.size else 0
+    }
+
+    fun remove(position: Int) {
+        mData?.let {
+            it.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, it.size - position)
+        }
+    }
+
+    fun insert(position: Int, item: T) {
+        mData?.let {
+            if (position <= it.size) {
+                it.add(position, item)
+                notifyItemInserted(position)
+                notifyItemRangeChanged(position, it.size - position)
+            } else {//避免越界
+                val position2 = it.size
+                it.add(item)
+                notifyItemInserted(position2)
+                notifyItemRangeChanged(position2, it.size - position2)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder2 {

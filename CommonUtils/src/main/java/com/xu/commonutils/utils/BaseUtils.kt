@@ -3,6 +3,7 @@ package com.xu.commonutils.utils
 import android.app.ActivityManager
 import android.content.ContentUris
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.text.TextUtils
 import android.view.View
@@ -79,6 +80,18 @@ object BaseUtils {
         return "1.0.0"
     }
 
+    fun getUid(context: Context): Int {
+        try {
+            val packageManager = context.packageManager
+            val applicationInfo =
+                packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
+            return applicationInfo.uid
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        return -1
+    }
+
     /**
      * 获取音频专辑图
      */
@@ -106,10 +119,10 @@ object BaseUtils {
     }
 
     @JvmStatic
-    fun startShake(view :View?){
+    fun startShake(view: View?) {
         view?.let {
             it.clearAnimation()
-            val animation = TranslateAnimation(0f,10f,0f,0f)
+            val animation = TranslateAnimation(0f, 10f, 0f, 0f)
             animation.duration = 500
             animation.interpolator = CycleInterpolator(3f)
             it.startAnimation(animation)
