@@ -2,7 +2,6 @@ package com.xu.commonutils.utils
 
 import android.app.Notification
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -156,11 +155,10 @@ object NotificationColorUtils {
         val viewGroup = LayoutInflater.from(context).inflate(layoutId, null, false) as ViewGroup
         return (viewGroup.findViewById<View>(android.R.id.title) as TextView?)?.currentTextColor
             ?: (viewGroup.findViewById<View>(textViewId) as TextView?)?.currentTextColor
-            ?: findColor(viewGroup)
+            ?: findColor2(viewGroup)
     }
 
     private fun findColor(viewGroupSource: ViewGroup): Int {
-        var color = Color.TRANSPARENT
         val viewGroups = LinkedList<ViewGroup>()
         viewGroups.add(viewGroupSource)
         while (viewGroups.size > 0) {
@@ -169,13 +167,29 @@ object NotificationColorUtils {
                 if (viewGroup1.getChildAt(i) is ViewGroup) {
                     viewGroups.add(viewGroup1.getChildAt(i) as ViewGroup)
                 } else if (viewGroup1.getChildAt(i) is TextView) {
-                    if ((viewGroup1.getChildAt(i) as TextView).currentTextColor != -1) {
-                        color = (viewGroup1.getChildAt(i) as TextView).currentTextColor
-                    }
+//                    if ((viewGroup1.getChildAt(i) as TextView).currentTextColor != -1) {
+//                        color = (viewGroup1.getChildAt(i) as TextView).currentTextColor
+//                    }
+                    return (viewGroup1.getChildAt(i) as TextView).currentTextColor
                 }
             }
             viewGroups.remove(viewGroup1)
         }
-        return color
+        return INVALID_COLOR
+    }
+
+    private fun findColor2(viewGroup: ViewGroup): Int {
+        for (i in 0 until viewGroup.childCount) {
+            val child = viewGroup.getChildAt(i)
+            if (child is ViewGroup) {
+                val color = findColor2(child)
+                if (color != INVALID_COLOR) {
+                    return color
+                }
+            } else if (child is TextView) {
+                return child.currentTextColor
+            }
+        }
+        return INVALID_COLOR
     }
 }

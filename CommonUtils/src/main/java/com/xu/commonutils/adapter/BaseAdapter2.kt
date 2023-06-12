@@ -44,25 +44,33 @@ abstract class BaseAdapter2<T>(data: MutableList<T>?) : RecyclerView.Adapter<Bas
     }
 
     fun remove(position: Int) {
-        mData?.let {
-            it.removeAt(position)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, it.size - position)
+        try {
+            mData?.let {
+                it.removeAt(position)
+                notifyItemRemoved(position)
+                notifyItemRangeChanged(position, it.size - position)
+            }
+        } catch (e: Exception) {//IndexOutOfBoundsException
+            e.printStackTrace()
         }
     }
 
     fun insert(position: Int, item: T) {
-        mData?.let {
-            if (position <= it.size) {
-                it.add(position, item)
-                notifyItemInserted(position)
-                notifyItemRangeChanged(position, it.size - position)
-            } else {//避免越界
-                val position2 = it.size
-                it.add(item)
-                notifyItemInserted(position2)
-                notifyItemRangeChanged(position2, it.size - position2)
+        try {
+            mData?.let {
+                if (position <= it.size) {
+                    it.add(position, item)
+                    notifyItemInserted(position)
+                    notifyItemRangeChanged(position, it.size - position)
+                } else {//避免越界
+                    val position2 = it.size
+                    it.add(item)
+                    notifyItemInserted(position2)
+                    notifyItemRangeChanged(position2, it.size - position2)
+                }
             }
+        } catch (e: Exception) {//IndexOutOfBoundsException
+            e.printStackTrace()
         }
     }
 
