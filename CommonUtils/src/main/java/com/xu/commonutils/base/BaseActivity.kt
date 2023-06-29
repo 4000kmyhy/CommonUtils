@@ -1,7 +1,9 @@
 package com.xu.commonutils.base
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -59,5 +61,22 @@ abstract class BaseActivity : AppCompatActivity(), OnViewClickListener {
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
         ViewCompat.getWindowInsetsController(window.decorView)
             ?.hide(WindowInsetsCompat.Type.navigationBars())
+    }
+
+    /**
+     * 设置完全全屏
+     */
+    protected fun setCompleteFullScreen(b: Boolean) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            if (b) {
+                window.attributes = window.attributes.apply {
+                    layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+                }
+            } else {
+                window.attributes = window.attributes.apply {
+                    layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT
+                }
+            }
+        }
     }
 }
