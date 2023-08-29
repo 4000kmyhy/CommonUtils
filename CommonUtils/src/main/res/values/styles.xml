@@ -6,6 +6,11 @@
         <item name="android:windowExitAnimation">@anim/anim_bottom_dialog_out</item>
     </style>
 
+    <style name="dialogAnimation2">
+        <item name="android:windowEnterAnimation">@anim/fragment_scale_enter</item>
+        <item name="android:windowExitAnimation">@anim/fragment_scale_exit</item>
+    </style>
+
     <style name="Dialog.FullScreen.Theme" parent="Base.AlertDialog.AppCompat">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">false</item>

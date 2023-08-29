@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 18
         targetSdkVersion 33
-        versionCode 33
-        versionName "1.3.3"
+        versionCode 34
+        versionName "1.3.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'proguard-rules.pro'
@@ -51,14 +51,7 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
 
-                groupId = 'com.xxx.commonutils'
-                artifactId = 'common-utils'
-                version = android.defaultConfig.versionName
-            }
-            debug(MavenPublication) {
-                from components.debug
-
-                groupId = 'com.xxx.commonutils'
+                groupId = 'com.xu.commonutils'
                 artifactId = 'common-utils'
                 version = android.defaultConfig.versionName
             }
