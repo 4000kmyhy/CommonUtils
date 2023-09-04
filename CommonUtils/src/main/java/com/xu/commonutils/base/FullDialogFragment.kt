@@ -74,7 +74,7 @@ abstract class FullDialogFragment<T : ViewBinding> : DialogFragment(), OnViewCli
 
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
-//        if (isFullScreen()) {
+//        if (isFullScreen) {
 //            setStyle(STYLE_NORMAL, R.style.Dialog_FullScreen_Theme)
 //        }
 //    }
