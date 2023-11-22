@@ -60,7 +60,7 @@ abstract class BasePopupWindow<T : ViewBinding>(context: Context) : PopupWindow(
         dismiss()
     }
 
-    fun show(anchor: View) {
+    open fun show(anchor: View) {
         val anchorLoc = IntArray(2)
         anchor.getLocationInWindow(anchorLoc)
         //实际坐标中心点为触发view的中间，(anchorLoc[0],anchorLoc[1])为anchorView左上角
