@@ -129,4 +129,16 @@ abstract class FullDialogFragment<T : ViewBinding> : DialogFragment(), OnViewCli
     fun show(manager: FragmentManager) {
         show(manager, javaClass.simpleName)
     }
+
+    override fun show(manager: FragmentManager, tag: String?) {
+        try {
+            val fragment = manager.findFragmentByTag(tag)
+            if (fragment != null && fragment.isAdded) {
+                return
+            }
+            super.show(manager, tag)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }
