@@ -24,6 +24,7 @@ abstract class BaseActivity2<T : ViewBinding> : AppCompatActivity(), OnViewClick
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         StatusBarUtils.init(this)
+        setFullScreen()
         binding = getViewBinding(layoutInflater)
         setContentView(binding.root)
         init()
@@ -43,7 +44,7 @@ abstract class BaseActivity2<T : ViewBinding> : AppCompatActivity(), OnViewClick
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        if (hasFocus && isFullScreen()) {
+        if (hasFocus) {
             setFullScreen()
         }
     }
@@ -53,6 +54,7 @@ abstract class BaseActivity2<T : ViewBinding> : AppCompatActivity(), OnViewClick
     }
 
     private fun setFullScreen() {
+        if (!isFullScreen()) return
         window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -60,7 +62,7 @@ abstract class BaseActivity2<T : ViewBinding> : AppCompatActivity(), OnViewClick
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
         ViewCompat.getWindowInsetsController(window.decorView)
-            ?.hide(WindowInsetsCompat.Type.navigationBars())
+            ?.hide(WindowInsetsCompat.Type.systemBars())
     }
 
     /**
