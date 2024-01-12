@@ -42,20 +42,16 @@ object InputMethodUtils {
     }
 
     @JvmStatic
-    fun hideSoftKeyBoard(view: View?) {
-        if (view == null || view.context == null) return
+    fun hideSoftKeyBoard(view: View?): Boolean {
+        if (view == null || view.context == null) return false
+        view.clearFocus()
         val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+        return imm.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
     }
 
     @JvmStatic
     fun hideSoftKeyBoard(activity: Activity?): Boolean {
-        if (activity == null || activity.currentFocus == null) return false
-        val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        return imm.hideSoftInputFromWindow(
-            activity.currentFocus!!.windowToken,
-            InputMethodManager.HIDE_NOT_ALWAYS
-        )
+        return hideSoftKeyBoard(activity?.currentFocus)
     }
 
     @Deprecated("")

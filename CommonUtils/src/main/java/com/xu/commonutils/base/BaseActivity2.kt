@@ -68,7 +68,7 @@ abstract class BaseActivity2<T : ViewBinding> : AppCompatActivity(), OnViewClick
     /**
      * 设置完全全屏
      */
-    protected fun setCompleteFullScreen(b: Boolean) {
+    fun setCompleteFullScreen(b: Boolean) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             if (b) {
                 window.attributes = window.attributes.apply {
