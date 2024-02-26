@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.PopupWindow
 import androidx.viewbinding.ViewBinding
+import com.xu.commonutils.R
 import com.xu.commonutils.utils.BaseUtils
 
 /**
@@ -24,6 +25,8 @@ abstract class BasePopupWindow<T : ViewBinding>(context: Context) : PopupWindow(
         contentView = binding.root
         isOutsideTouchable = true
         setBackgroundDrawable(ColorDrawable()) //Android5.0以下点击外部无法收起
+
+        animationStyle = R.style.popupAnimation
 
         isFocusable = true
         if (isFullScreen()) {
