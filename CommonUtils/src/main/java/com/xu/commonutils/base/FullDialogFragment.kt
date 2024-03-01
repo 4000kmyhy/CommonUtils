@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -129,8 +128,17 @@ abstract class FullDialogFragment<T : ViewBinding> : DialogFragment(), OnViewCli
 
     override fun onViewClick(view: View, id: Int) {}
 
-    fun show(manager: FragmentManager) {
-        show(manager, javaClass.simpleName)
+    //todo
+    fun show2(manager: FragmentManager, tag: String?) {
+        try {
+            val fragment = manager.findFragmentByTag(tag)
+            if (fragment != null && fragment.isAdded) {
+                return
+            }
+            super.show(manager, tag)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun show(manager: FragmentManager, tag: String?) {
