@@ -3,15 +3,17 @@ package com.xu.commonutils.utils
 import android.app.ActivityManager
 import android.content.ContentUris
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.View
 import android.view.animation.CycleInterpolator
 import android.view.animation.TranslateAnimation
 import androidx.annotation.ColorInt
 import androidx.core.graphics.ColorUtils
-import java.util.*
+import java.util.Locale
 
 /**
  * desc:
@@ -126,6 +128,19 @@ object BaseUtils {
             animation.duration = 500
             animation.interpolator = CycleInterpolator(3f)
             it.startAnimation(animation)
+        }
+    }
+
+    fun shareMusic(context: Context, id: Long) {
+        try {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "audio/*"
+            val uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id)
+            intent.putExtra(Intent.EXTRA_STREAM, uri)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            context.startActivity(Intent.createChooser(intent, ""))
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }

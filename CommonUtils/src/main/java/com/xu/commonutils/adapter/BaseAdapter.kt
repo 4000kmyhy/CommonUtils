@@ -16,7 +16,7 @@ import java.lang.reflect.ParameterizedType
  * user: xujj
  * time: 2022/8/16 14:39
  **/
-abstract class BaseAdapter<T, K : BaseViewHolder?>(data: List<T>?) : RecyclerView.Adapter<K?>() {
+abstract class BaseAdapter<T, K : BaseViewHolder>(data: List<T>?) : RecyclerView.Adapter<K>() {
 
     protected var mData: List<T>?
 

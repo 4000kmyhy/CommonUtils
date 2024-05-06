@@ -63,6 +63,30 @@ object StringUtils {
         }
     }
 
+    /**
+     * 获取00:00.0的时间
+     */
+    fun stringForMsTime(millisecond: Long): String {
+        val second = millisecond / 1000.0
+        val hh = (second / 3600).toInt()
+        val mm = (second % 3600 / 60).toInt()
+        val ss = (second % 60).toInt()
+        val dec = (second % 60 * 10 % 10).toInt()
+        return if (hh != 0) {
+            try {
+                String.format("%02d:%02d:%02d.%01d", hh, mm, ss, dec)
+            } catch (e: OutOfMemoryError) {
+                "00:00:00"
+            }
+        } else {
+            try {
+                String.format("%02d:%02d.%01d", mm, ss, dec)
+            } catch (e: OutOfMemoryError) {
+                "00:00"
+            }
+        }
+    }
+
     @JvmStatic
     fun stringForHour(millisecond: Long): String {
         val second = millisecond / 1000
