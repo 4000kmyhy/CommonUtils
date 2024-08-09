@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 
 /**
  * desc:
@@ -13,7 +14,7 @@ import android.content.IntentFilter
  **/
 class BaseBroadcastReceiver(context: Context?) : BroadcastReceiver() {
 
-    interface OnReceiveCallback {
+    fun interface OnReceiveCallback {
         fun onReceive(context: Context, intent: Intent)
     }
 
@@ -34,7 +35,11 @@ class BaseBroadcastReceiver(context: Context?) : BroadcastReceiver() {
 
     fun register(callback: OnReceiveCallback?): BaseBroadcastReceiver {
         onReceiveCallback = callback
-        mContext?.registerReceiver(this, intentFilter)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            mContext?.registerReceiver(this, intentFilter, Context.RECEIVER_EXPORTED)
+        } else {
+            mContext?.registerReceiver(this, intentFilter)
+        }
         return this
     }
 

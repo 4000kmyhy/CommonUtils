@@ -129,7 +129,11 @@ abstract class BaseAdapter2<T>(data: MutableList<T>?) : RecyclerView.Adapter<Bas
         }
     }
 
-    abstract fun onBindView(binding: ViewBinding, position: Int, item: T)
+    abstract fun onBindView(
+        binding: ViewBinding,
+        position: Int,
+        item: T
+    )
 
     override fun getItemCount(): Int {
         return getSize()

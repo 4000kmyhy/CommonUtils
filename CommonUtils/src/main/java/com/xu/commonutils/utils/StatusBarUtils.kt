@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Build
 import android.util.DisplayMetrics
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.Window
 import android.view.WindowManager
 
@@ -118,6 +119,15 @@ object StatusBarUtils {
         view.setPadding(0, getStatusBarHeight(view.context), 0, 0)
     }
 
+    fun marginStatusBar(view: View?) {
+        if (view == null || view.context == null) return
+        view.layoutParams = view.layoutParams.also {
+            if (it is MarginLayoutParams) {
+                it.topMargin = getStatusBarHeight(view.context)
+            }
+        }
+    }
+
     /**
      * 沉浸式导航栏
      */
@@ -125,6 +135,15 @@ object StatusBarUtils {
     fun immerseNavigationBar(view: View?) {
         if (view == null || view.context == null) return
         view.setPadding(0, 0, 0, getNavigationBarHeight(view.context))
+    }
+
+    fun marginNavigationBar(view: View?) {
+        if (view == null || view.context == null) return
+        view.layoutParams = view.layoutParams.also {
+            if (it is MarginLayoutParams) {
+                it.bottomMargin = getNavigationBarHeight(view.context)
+            }
+        }
     }
 
     /**

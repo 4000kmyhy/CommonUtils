@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <style name="dialogAnimation">
         <item name="android:windowEnterAnimation">@anim/anim_bottom_dialog_in</item>
@@ -9,6 +9,11 @@
     <style name="dialogAnimation2">
         <item name="android:windowEnterAnimation">@anim/fragment_scale_enter</item>
         <item name="android:windowExitAnimation">@anim/fragment_scale_exit</item>
+    </style>
+
+    <style name="dialogAnimation.Top">
+        <item name="android:windowEnterAnimation">@anim/anim_top_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_top_dialog_out</item>
     </style>
 
     <style name="popupAnimation">
